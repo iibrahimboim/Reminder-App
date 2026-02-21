@@ -111,11 +111,7 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 if ('serviceWorker' in navigator) {
-<<<<<<< HEAD
   navigator.serviceWorker.register("/firebase-messaging-sw.js");
-=======
-  navigator.serviceWorker.register("/script.js");
->>>>>>> d4f8dc2ab2468d0c021229e1c4577d0b93abdfe5
 }
 
 window.enableNotif = async function () {
