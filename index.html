@@ -118,7 +118,7 @@ window.enableNotif = async function () {
   const permission = await Notification.requestPermission();
   if (permission === "granted") {
     const token = await getToken(messaging, {
-      vapidKey: "YOUR_VAPID_PUBLIC_KEY"
+      vapidKey: "YOUR_VAPID_PUBLIC_KEY_BK8-Uupn5L5xF4wx22ZacGVcEAtBxX5Lo22QWDHRXLZ1S26DXh-xkAhjbdoa1UxR6dss8GUAsnwmA6i4F2CH7Qk"
     });
     console.log("TOKEN:", token);
     alert("Notif aktif bro 🔥");
