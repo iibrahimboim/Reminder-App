@@ -1,0 +1,8 @@
+{
+  "name": "Daily Check-In Pro",
+  "short_name": "CheckIn",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#4e73df",
+  "theme_color": "#4e73df"
+}

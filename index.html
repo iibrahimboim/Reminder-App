@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Check-In Pro</title>
+<link rel="manifest" href="manifest.json">
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: #e0ecfd;
+  width: 260px;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0px 30px rgba(0, 0, 0, 0.492);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #111;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  margin-top: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+
+.primary {
+  background: #111;
+  color: white;
+}
+
+.primary:hover {
+  opacity: 0.8;
+}
+
+.mainButton {
+  background: #f2f2f2;
+  color: #111;
+}
+
+.mainButton:hover {
+  background: #e6e6e6;
+}
+.secondary {
+  background: #f2f2f2;
+  color: #111;
+}
+
+.secondary:hover {
+  background: #e6e6e6;
+}
+
+.streak {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.fire {
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h2>Daily Check-In</h2>
+
+  <input type="time" id="reminderTime">
+  <button class="mainButton" onclick="saveTime()">Simpan Jam Reminder</button>
+
+<button class="secondary" onclick="enableNotif()">Aktifkan Notifikasi</button>
+<button class="primary" onclick="checkIn()">Check-In Hari Ini</button>
+
+<div class="streak">
+  Streak: <span id="streakCount" class="fire">0</span> 🔥
+</div>
+
+</body>
+<script>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register("script.js");
+}
+
+window.enableNotif = async function () {
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    const token = await getToken(messaging, {
+      vapidKey: "YOUR_VAPID_PUBLIC_KEY"
+    });
+    console.log("TOKEN:", token);
+    alert("Notif aktif bro 🔥");
+  }
+};
+
+// ===== STREAK SYSTEM =====
+
+function updateStreakUI() {
+  document.getElementById("streakCount").innerText =
+    localStorage.getItem("streak") || 0;
+}
+
+window.checkIn = function () {
+  const today = new Date().toDateString();
+  const lastCheck = localStorage.getItem("lastCheck");
+
+  let streak = parseInt(localStorage.getItem("streak")) || 0;
+
+  if (lastCheck !== today) {
+    streak++;
+    localStorage.setItem("streak", streak);
+    localStorage.setItem("lastCheck", today);
+  }
+
+  updateStreakUI();
+};
+
+updateStreakUI();
+
+
+window.saveTime = function () {
+  const time = document.getElementById("reminderTime").value;
+  localStorage.setItem("reminderTime", time);
+  alert("Jam disimpan bro 🔥");
+};
+</script>
+</html>
