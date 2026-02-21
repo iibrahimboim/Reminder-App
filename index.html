@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Check-In Pro</title>
-<link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="manifest.json">
 <style>
 body {
   margin: 0;
@@ -111,14 +111,14 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register("/firebase-messaging-sw.js");
+  navigator.serviceWorker.register("firebase-messaging-sw.js");
 }
 
 window.enableNotif = async function () {
   const permission = await Notification.requestPermission();
   if (permission === "granted") {
     const token = await getToken(messaging, {
-      vapidKey: "YOUR_VAPID_PUBLIC_KEY_BK8-Uupn5L5xF4wx22ZacGVcEAtBxX5Lo22QWDHRXLZ1S26DXh-xkAhjbdoa1UxR6dss8GUAsnwmA6i4F2CH7Qk"
+      vapidKey: "BK8-Uupn5L5xF4wx22ZacGVcEAtBxX5Lo22QWDHRXLZ1S26DXh-xkAhjbdoa1UxR6dss8GUAsnwmA6i4F2CH7Qk"
     });
     console.log("TOKEN:", token);
     alert("Notif aktif bro 🔥");
